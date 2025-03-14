@@ -1,0 +1,16 @@
+{
+  "name": "js-cypress",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "npx cypress run --browser chrome"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "cypress": "^14.2.0",
+    "cypress-mochawesome-reporter": "^3.8.2"
+  }
+}
