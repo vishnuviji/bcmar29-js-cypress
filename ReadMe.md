@@ -2,7 +2,20 @@
 
 This project is a test automation framework using Cypress for end-to-end testing of web applications.
 
+## Pre-requisites
+
+Before you begin, ensure you have met the following requirements:
+- [Node](https://nodejs.org/en/download)
+- [Visual Studio Code](https://code.visualstudio.com/download) (optional)
+
 ## Installation
+
+First, clone the repository and change to the project directory:
+
+```bash
+git clone https://github.com/Axone-Tech/js-cypress.git
+cd js-cypress
+```
 
 To install the project dependencies, run the following command:
 
@@ -24,6 +37,12 @@ Alternatively, to run the tests in headless mode, use:
 
 ```bash
 npx cypress run
+```
+
+To run the tests in headed mode, use:
+
+```bash
+npx cypress run --headed
 ```
 
 ## Project Structure
