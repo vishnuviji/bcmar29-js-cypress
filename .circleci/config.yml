@@ -1,26 +1,9 @@
 version: 2.1
-jobs:
-  test:
-    docker:
-      - image: mcr.microsoft.com/dotnet/sdk:9.0
-    steps:
-      - checkout
-      - run:
-          name: "Install dependencies"
-          command: dotnet restore
-      - run:
-          name: "Create a build"
-          command: dotnet build --configuration Release
-      - run:
-          name: "Install Playwright Browsers"
-          command: pwsh playwright-nunit/bin/Release/net9.0/playwright.ps1 install --with-deps chromium
-      - run:
-          name: "Run the tests"
-          command: dotnet test --configuration Release --no-build --logger "html;LogFileName=index.html"
-      - store_artifacts:
-          path: playwright-nunit/TestResults
-          destination: test-results
+orbs:
+  cypress: cypress-io/cypress@3
 workflows:
-  test_pipeline:
+  build:
     jobs:
-      - test
+      - cypress/run:
+          install-browsers: true
+          cypress-command: 'npm test'
