@@ -1,32 +1,26 @@
-# This config was automatically generated from your source code
-# Stacks detected: deps:node:.
 version: 2.1
-orbs:
-  node: circleci/node@5
 jobs:
-  test-node:
-    # Install node dependencies and run tests
-    executor: node/default
+  test:
+    docker:
+      - image: mcr.microsoft.com/dotnet/sdk:9.0
     steps:
       - checkout
-      - node/install-packages:
-          pkg-manager: npm
       - run:
-          name: Run tests
-          command: npm test --passWithNoTests
-  deploy:
-    # This is an example deploy job, not actually used by the workflow
-    docker:
-      - image: cimg/base:stable
-    steps:
-      # Replace this with steps to deploy to users
+          name: "Install dependencies"
+          command: dotnet restore
       - run:
-          name: deploy
-          command: '#e.g. ./deploy.sh'
+          name: "Create a build"
+          command: dotnet build --configuration Release
+      - run:
+          name: "Install Playwright Browsers"
+          command: pwsh playwright-nunit/bin/Release/net9.0/playwright.ps1 install --with-deps chromium
+      - run:
+          name: "Run the tests"
+          command: dotnet test --configuration Release --no-build --logger "html;LogFileName=index.html"
+      - store_artifacts:
+          path: playwright-nunit/TestResults
+          destination: test-results
 workflows:
-  build-and-test:
+  test_pipeline:
     jobs:
-      - test-node
-    # - deploy:
-    #     requires:
-    #       - test-node
+      - test
