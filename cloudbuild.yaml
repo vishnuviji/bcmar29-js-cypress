@@ -1,0 +1,25 @@
+steps:
+  - name: node
+    id: 'Install dependencies'
+    entrypoint: yarn
+    args: ['install']
+    env:
+      - 'CYPRESS_CACHE_FOLDER=/workspace/.tmp/Cypress'
+
+  - name: cypress/included
+    id: 'Run tests'
+    entrypoint: yarn
+    args: ['run', 'test']
+    env:
+      - 'CYPRESS_CACHE_FOLDER=/workspace/.tmp/Cypress'
+artifacts:
+  objects:
+    location: gs://bootcamp_mar30/cypress-reports/
+    paths:
+      - 'cypress/reports/html/**'
+options:
+  machineType: 'E2_HIGHCPU_8'
+  logging: CLOUD_LOGGING_ONLY
+    
+    
+       
